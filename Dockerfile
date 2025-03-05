@@ -1,18 +1,24 @@
-FROM dustynv/llama_cpp:0.3.7-r36.4.0-cu128-24.04
+FROM python:3.9-slim
+
+# Install necessary system packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install llama-cpp-python
+RUN pip install llama-cpp-python
 
 WORKDIR /workspace
 
-# Copy required files
+# Copy application files
 COPY . /workspace
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir runpod
 
-# Download the GGUF model file
+# Download GGUF model
 RUN curl -L -o /workspace/Lumimaid-v0.2-12B.q5_k_m.gguf \
     https://huggingface.co/NeverSleep/Lumimaid-v0.2-12B-GGUF/resolve/main/Lumimaid-v0.2-12B.q5_k_m.gguf
-
-# Uncomment for local testing
-# RUN pip install llama-cpp-python==0.1.78
 
 CMD ["python", "-u", "handle.py"]
