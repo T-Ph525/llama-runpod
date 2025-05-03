@@ -19,6 +19,6 @@ COPY . /workspace
 RUN pip install --no-cache-dir runpod
 
 # Download GGUF model
-RUN curl -L -o https://huggingface.co/NeverSleep/Lumimaid-v0.2-70B-GGUF/resolve/main/Lumimaid-v0.2-70B.q4_k_m.gguf
+RUN wget -P workspace https://huggingface.co/NeverSleep/Lumimaid-v0.2-70B-GGUF/resolve/main/Lumimaid-v0.2-70B.q4_k_m.gguf
 
 CMD ["python", "-u", "handle.py"]
