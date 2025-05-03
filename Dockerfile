@@ -3,7 +3,7 @@ FROM python:3.9-slim
 # Install necessary system packages
 RUN apt-get update && apt-get install -y \
     build-essential \
-    aria2c \
+    aria2 \
     git \
     && rm -rf /var/lib/apt/lists/*
 
@@ -19,6 +19,6 @@ COPY . /workspace
 RUN pip install --no-cache-dir runpod
 
 # Download GGUF model
-RUN aria2 -d /workspace https://huggingface.co/NeverSleep/Lumimaid-v0.2-70B-GGUF/resolve/main/Lumimaid-v0.2-70B.q4_k_m.gguf
+RUN aria2c -d /workspace https://huggingface.co/NeverSleep/Lumimaid-v0.2-70B-GGUF/resolve/main/Lumimaid-v0.2-70B.q4_k_m.gguf
 
 CMD ["python", "-u", "handle.py"]
